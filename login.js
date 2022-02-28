@@ -61,7 +61,8 @@ app.get('/home', function(request, response) {
 	// If the user is loggedin
 	if (request.session.loggedin) {
 		// Output username
-		response.send('Welcome back, ' + request.session.username + '!');
+		//response.send('Welcome back, ' + request.session.username + '!');
+		response.redirect('home.html')
 	} else {
 		// Not logged in
 		response.send('Please login to view this page!');
