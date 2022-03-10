@@ -1,4 +1,5 @@
 <?php
+require __DIR__.'/lib/db.inc.php';
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
@@ -6,14 +7,8 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: index.html');
     exit;
 }
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'root';
-$DATABASE_PASS = '';
-$DATABASE_NAME = 'login_account';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-if (mysqli_connect_errno()) {
-    exit('Failed to connect to MySQL: ' . mysqli_connect_error());
-}
+global $db;
+$db = unisched_DB();
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +26,7 @@ if (mysqli_connect_errno()) {
     <div>
     <h3>Course List:</h3>
     <?php
-        $stmt = $con->prepare("SELECT * FROM courses");
+        $stmt = $db->prepare("SELECT * FROM courses");
         $stmt->execute();
         $resultSet = $stmt->get_result();
         $res = $resultSet->fetch_all();
@@ -126,6 +121,6 @@ if (mysqli_connect_errno()) {
     </div>
 </body>
 
-<script src = "timetable.js"></script>
+<script src = "javascript/timetable.js"></script>
 
 </html>
