@@ -1,4 +1,4 @@
-DB name: login_account
+DB name: unisched
 
 DB1: accounts(id(primary key + AI), username, password, email)
 
