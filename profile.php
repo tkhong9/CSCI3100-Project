@@ -9,7 +9,11 @@ if (!isset($_SESSION['loggedin'])) {
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
+<<<<<<< HEAD
 $DATABASE_NAME = 'unisched';
+=======
+$DATABASE_NAME = 'login_account';
+>>>>>>> fe21e8e734e8270828281b1d5758fdcd4f86f9c5
 $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 if (mysqli_connect_errno()) {
     exit('Failed to connect to MySQL: ' . mysqli_connect_error());
@@ -83,7 +87,11 @@ $stmt->close();
                         $DATABASE_HOST = 'localhost';
                         $DATABASE_USER = 'root';
                         $DATABASE_PASS = '';
+<<<<<<< HEAD
                         $DATABASE_NAME = 'unisched';
+=======
+                        $DATABASE_NAME = 'login_account';
+>>>>>>> fe21e8e734e8270828281b1d5758fdcd4f86f9c5
                         $link = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 
                         $target = "profile pic/";		
@@ -92,7 +100,11 @@ $stmt->close();
                         $result = move_uploaded_file($tempFileName,$fileTarget);
 
                         if($result) { 
+<<<<<<< HEAD
                             $fileTarget = "/UniSched/";	
+=======
+                            $fileTarget = "/UniSched-main/";	
+>>>>>>> fe21e8e734e8270828281b1d5758fdcd4f86f9c5
                             $fileTarget .= $target.$fileName;	
                             echo '<script>alert("Your new profile picture has been successfully uploaded!")</script>';		
                             $query = "UPDATE accounts SET f_path = '$fileTarget', f_name = '$fileName' WHERE id = $id";;
@@ -126,4 +138,8 @@ $stmt->close();
 </div>
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> fe21e8e734e8270828281b1d5758fdcd4f86f9c5
