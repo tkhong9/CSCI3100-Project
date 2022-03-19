@@ -7,6 +7,7 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: index.html');
     exit;
 }
+
 global $db;
 $db = unisched_DB();
 ?>
@@ -24,21 +25,65 @@ $db = unisched_DB();
 </head>
 <body class="loggedin">
     <div>
-    <h3>Course List:</h3>
+    <h3>Timetable</h3>
     <?php
-        $stmt = $db->prepare("SELECT * FROM courses");
+        $stmt = $db->prepare("SELECT id FROM accounts WHERE username = ?");
+        $stmt->bind_param('s', $_SESSION['name']);
         $stmt->execute();
         $resultSet = $stmt->get_result();
         $res = $resultSet->fetch_all();
-        $course_no = 0;
-        foreach($res as $row){
-            $course_no += 1;
+        $res_count = count($res);
+
+        if ($res_count == 0) {
+            header('Content-Type: text/html; charset=utf-8');
+            echo 'This user is not exist! <br/><a href="javascript:history.back();">Back to admin panel.</a>';
+        }
+        else{
+            foreach($res as $row){
+                $user_id = $row[0];
+                $stmt2 = $db->prepare("SELECT * FROM mycourses WHERE user_id = ?");
+                $stmt2->bind_param('i', $user_id);
+                $stmt2->execute();
+                $resultSet2 = $stmt2->get_result();
+                $res2 = $resultSet2->fetch_all();
+                foreach($res2 as $row2){
+                    $courseno = 0;
+                    $courseID = array($row2[3], $row2[4], $row2[5], $row2[6], $row2[7], $row2[8]);
+                    for ($i = 0;$i < count($courseID);$i++){
+                        if ($courseID[$i] != 0){
+                            $stmt3 = $db->prepare("SELECT * FROM courses WHERE course_id = ?");
+                            $stmt3->bind_param('i', $courseID[$i]);
+                            $stmt3->execute();
+                            $resultSet3 = $stmt3->get_result();
+                            $res3 = $resultSet3->fetch_all();
+                            foreach($res3 as $row3){
+                                $courseno += 1;
+                                $courseCode = $row3[1];
+                                //$courseTitle = $row3[2];
+                                //$courseUnit = $row3[3];
+                                $courseStrTime = $row3[4];
+                                $courseEndTime = $row3[5];
+                                $courseWeekday = $row3[6];
+                                //$courseLocation = $row3[7];
+
+                                $weekday = strtolower(substr($courseWeekday, 0, 3));
+                                $strtime = explode(":", $courseStrTime);
+                                $weekid = $weekday . $strtime[0]; //e.g. wed10
+        
     ?>
-        <input type="checkbox" id="course<?php echo $course_no; ?>" name="vehicle<?php echo $course_no; ?>" onclick="course_click('c<?php echo $course_no; ?>')">
-        <label for="course<?php echo $course_no; ?>" id="c<?php echo $course_no; ?>"><?php echo $row[1]; ?> <?php echo $row[4]; ?>, <?php echo $row[5]; ?></label><br>
+    <p id = "mycourseCode<?php echo $courseno; ?>" hidden><?php echo $courseCode; ?></p>
+    <p id = "mycourseWeekid<?php echo $courseno; ?>" hidden><?php echo $weekid; ?></p>
+
     <?php
+                            }
+                        }
+                    }
+                }
+            }
         }
     ?>
+    <p id = "mycourseno" hidden><?php echo $courseno; ?></p>
+
     </div>
     <hr>
     <div class="timetable">
@@ -119,6 +164,17 @@ $db = unisched_DB();
             <div class="weekend"></div>
         </div>
     </div>
+
+    <script>
+        var mycourseno = document.getElementById("mycourseno").innerHTML;
+        for (var x = 1; x <= parseInt(mycourseno); x++){
+            var courseCode = document.getElementById("mycourseCode" + x).innerHTML;
+            var weekid = document.getElementById("mycourseWeekid" + x).innerHTML;
+            document.getElementById(weekid).className = "accent-pink-gradient";
+            document.getElementById(weekid).innerHTML = courseCode;
+        }
+    </script>
+
 </body>
 
 <script src = "javascript/timetable.js"></script>

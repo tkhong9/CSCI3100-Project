@@ -19,9 +19,11 @@ foreach ($res as $val){
             <label for="course_title"> Course Title *</label>
             <div> <input id="course_title" type="text" name="title" required="required" pattern="^[a-zA-Z0-9\s]+$"/></div>
             <label for="course_unit"> Unit(s) *</label>
-            <div> <input id="course_unit" type="number" name="unit" required="required"/></div>
-            <label for="course_time"> Time *</label>
-            <div> <input id="course_time" type="text" name="time" required="required" pattern="^[0-9\:\-]+$"/></div>
+            <div> <input id="course_unit" type="number" name="unit" min="0" max="3" required="required"/></div>
+            <label for="course_strtime"> Start Time *</label>
+            <div> <input id="course_strtime" type="text" name="strtime" required="required" pattern="^[0-9\:]+$"/></div>
+            <label for="course_endtime"> End Time *</label>
+            <div> <input id="course_endtime" type="text" name="endtime" required="required" pattern="^[0-9\:]+$"/></div>
             <label for="course_day"> Weekday *</label>
             <div> <input id="course_day" type="text" name="day" required="required" pattern="^[a-zA-Z]+$"/></div>
             <label for="course_location"> Location * </label>
@@ -38,8 +40,10 @@ foreach ($res as $val){
             <div> <select id="course_id" name="course_id"><?php echo $options; ?></select></div>
             <label for="course_title"> New Title *</label>
             <div> <input id="course_title" type="text" name="title" required="required" pattern="^[a-zA-Z0-9\s]+$"/></div>
-            <label for="prod_price"> New Time *</label>
-            <div> <input id="course_time" type="text" name="time" required="required" pattern="^[0-9\:\-]+$"/></div>
+            <label for="course_strtime"> New Start Time *</label>
+            <div> <input id="course_strtime" type="text" name="strtime" required="required" pattern="^[0-9\:]+$"/></div>
+            <label for="course_endtime"> New End Time *</label>
+            <div> <input id="course_endtime" type="text" name="endtime" required="required" pattern="^[0-9\:]+$"/></div>
             <input type="submit" value="Submit"/>
         </form>
     </fieldset>

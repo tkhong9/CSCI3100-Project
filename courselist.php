@@ -7,6 +7,7 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: index.html');
     exit;
 }
+// Call database
 global $db;
 $db = unisched_DB();
 ?>
@@ -25,6 +26,7 @@ $db = unisched_DB();
         <h1>Unisched</h1>
         <a href="home.php">Home</a>
         <a href="#" onclick="showPage('timetable.php')">Timetable</a>
+        <a href="mycourselist.php" onclick="showPage('mycourselist.php')">My Course List</a>
         <a href="courselist.php" onclick="showPage('courselist.php')">Course List</a>
         <a href="profile.php" onclick="showPage('profile.php')"><i class="fas fa-user-circle"></i>Profile</a>
         <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
@@ -44,8 +46,8 @@ $db = unisched_DB();
         <p>Course Code: <?php echo $row[1]; ?></p>
         <p>Course Title: <?php echo $row[2]; ?></p>
         <p>Unit: <?php echo $row[3]; ?></p>
-        <p>Time: <?php echo $row[4]; ?>, <?php echo $row[5]; ?></p>
-        <p>Location: <?php echo $row[6]; ?></p>
+        <p>Time: <?php echo $row[4]; ?>-<?php echo $row[5]; ?>, <?php echo $row[6]; ?></p>
+        <p>Location: <?php echo $row[7]; ?></p>
     </div>
     <?php
         }
