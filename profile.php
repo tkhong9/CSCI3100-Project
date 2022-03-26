@@ -64,10 +64,11 @@ $stmt->close();
                     <td><label>
                     <?php	
                         if ($f_path == NULL) {
-                            $f_path = "/Unisched/image/uploadImage.jpg";
+                            $f_path = "/image/uploadimage.jpg";
                         }
                     ?> 
-                    <img id="output" src="<?php echo $f_path ?>" width="50%" height="50%" class="image"/>
+                    
+                    <img id="output" src="<?php echo $f_path ?>" width="200" height="200" class="image"/>
                     <br><input name="Filename" type="file" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])" style="display:none;">
                     <br><input TYPE="submit" name="upload" value="Submit"/></label></td>
                 </form>

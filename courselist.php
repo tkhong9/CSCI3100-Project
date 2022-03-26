@@ -16,9 +16,10 @@ $db = unisched_DB();
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Profile Page</title>
+    <title>Course List</title>
     <link href="css/home.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="loggedin">
 <nav class="navtop">
@@ -43,11 +44,12 @@ $db = unisched_DB();
         foreach($res as $row){
     ?>
     <div onmouseover="this.style.background='#ccc'" onmouseout="this.style.background=''">
-        <p>Course Code: <?php echo $row[1]; ?></p>
-        <p>Course Title: <?php echo $row[2]; ?></p>
-        <p>Unit: <?php echo $row[3]; ?></p>
-        <p>Time: <?php echo $row[4]; ?>-<?php echo $row[5]; ?>, <?php echo $row[6]; ?></p>
-        <p>Location: <?php echo $row[7]; ?></p>
+        <p id = "CourseCode<?php echo $row[0]; ?>">Course Code: <?php echo $row[1]; ?></p>
+        <p id = "CourseTitle<?php echo $row[0]; ?>">Course Title: <?php echo $row[2]; ?></p>
+        <p id = "Unit<?php echo $row[0]; ?>">Unit: <?php echo $row[3]; ?></p>
+        <p id = "Time<?php echo $row[0]; ?>">Time: <?php echo $row[4]; ?>-<?php echo $row[5]; ?>, <?php echo $row[6]; ?></p>
+        <p id = "Location<?php echo $row[0]; ?>">Location: <?php echo $row[7]; ?></p>
+        <button type="button" onclick="addCourse(`<?php echo $_SESSION['id']; ?>`, `<?php echo $row[0]; ?>`)">Add Course</button>
     </div>
     <?php
         }
@@ -55,4 +57,7 @@ $db = unisched_DB();
 
 </div>
 </body>
+
+<script src = "course.js"></script>
+
 </html>

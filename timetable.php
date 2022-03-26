@@ -24,8 +24,9 @@ $db = unisched_DB();
     
 </head>
 <body class="loggedin">
-    <div>
-    <h3>Timetable</h3>
+
+    <div class="content" id="display">
+    <h2>Timetable</h2>
     <?php
         $stmt = $db->prepare("SELECT id FROM accounts WHERE username = ?");
         $stmt->bind_param('s', $_SESSION['name']);

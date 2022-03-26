@@ -7,6 +7,7 @@ if (!isset($_SESSION['loggedin'])) {
     header('Location: index.html');
     exit;
 }
+// Call database
 global $db;
 $db = unisched_DB();
 ?>
@@ -15,7 +16,7 @@ $db = unisched_DB();
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Profile Page</title>
+    <title>My Course List</title>
     <link href="css/home.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 </head>
