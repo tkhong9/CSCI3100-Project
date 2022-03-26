@@ -64,7 +64,7 @@ $stmt->close();
                     <td><label>
                     <?php	
                         if ($f_path == NULL) {
-                            $f_path = "/image/uploadimage.jpg";
+                            $f_path = "/Unisched/image/uploadImage.jpg";
                         }
                     ?> 
                     <img id="output" src="<?php echo $f_path ?>" width="50%" height="50%" class="image"/>
