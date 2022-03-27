@@ -58,6 +58,6 @@ $db = unisched_DB();
 </div>
 </body>
 
-<script src = "course.js"></script>
+<script src = "mycourse.js"></script>
 
 </html>

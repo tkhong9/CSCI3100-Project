@@ -19,6 +19,7 @@ $db = unisched_DB();
     <title>My Course List</title>
     <link href="css/home.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body class="loggedin">
 <nav class="navtop">
@@ -68,11 +69,12 @@ $db = unisched_DB();
         
     ?>
     <div onmouseover="this.style.background='#ccc'" onmouseout="this.style.background=''">
-        <p>Course Code: <?php echo $row3[1]; ?></p>
-        <p>Course Title: <?php echo $row3[2]; ?></p>
-        <p>Unit: <?php echo $row3[3]; ?></p>
-        <p>Time: <?php echo $row3[4]; ?>-<?php echo $row3[5]; ?>, <?php echo $row3[6]; ?></p>
-        <p>Location: <?php echo $row3[7]; ?></p>
+        <p id = "myCourseCode<?php echo $courseID[$i]; ?>">Course Code: <?php echo $row3[1]; ?></p>
+        <p id = "myCourseTitle<?php echo $courseID[$i]; ?>">Course Title: <?php echo $row3[2]; ?></p>
+        <p id = "myUnit<?php echo $courseID[$i]; ?>">Unit: <?php echo $row3[3]; ?></p>
+        <p id = "myTime<?php echo $courseID[$i]; ?>">Time: <?php echo $row3[4]; ?>-<?php echo $row3[5]; ?>, <?php echo $row3[6]; ?></p>
+        <p id = "myLocation<?php echo $courseID[$i]; ?>">Location: <?php echo $row3[7]; ?></p>
+        <button type="button" onclick="deleteCourse(`<?php echo $_SESSION['id']; ?>`, `<?php echo $courseID[$i]; ?>`)">Delete Course</button>
     </div>
     <?php
                             }
@@ -85,4 +87,7 @@ $db = unisched_DB();
 
 </div>
 </body>
+
+<script src = "mycourse.js"></script>
+
 </html>
