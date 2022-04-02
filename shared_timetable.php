@@ -10,13 +10,16 @@ if (!isset($_SESSION['loggedin'])) {
 
 global $db;
 $db = unisched_DB();
+
+$userid = $_GET['userid'];
+$username = $_GET['username'];
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Shared Timetable</title>
+    <title><?php echo $username; ?>'s Timetable</title>
     <link href="css/home.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -31,16 +34,13 @@ $db = unisched_DB();
         <a href="#" onclick="showPage('timetable.php')">Timetable</a>
         <a href="mycourselist.php" onclick="showPage('mycourselist.php')">My Course List</a>
         <a href="courselist.php" onclick="showPage('courselist.php')">Course List</a>
-        <a href="shared.php" onclick="showPage('shared.php')">Share Course</a>
+        <a href="shared.php" onclick="showPage('shared.php')">Share Timetable</a>
         <a href="profile.php" onclick="showPage('profile.php')"><i class="fas fa-user-circle"></i>Profile</a>
         <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
     </div>
 </nav>
     <div class="content" id="display">
-    <?php
-        $userid = $_GET['userid'];
-        $username = $_GET['username'];
-    ?>
+
     <h2><?php echo $username; ?>'s Timetable</h2>
     <?php
         $stmt = $db->prepare("SELECT * FROM mycourses WHERE user_id = ?");

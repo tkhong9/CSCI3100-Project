@@ -49,7 +49,7 @@ $stmt->close();
         <a href="timetable.php" onclick="showPage('timetable.php')">Timetable</a>
         <a href="mycourselist.php" onclick="showPage('mycourselist.php')">My Course List</a>
         <a href="courselist.php" onclick="showPage('courselist.php')">Course List</a>
-        <a href="shared.php" onclick="showPage('shared.php')">Share Course</a>
+        <a href="shared.php" onclick="showPage('shared.php')">Share Timetable</a>
         <a href="profile.php" onclick="showPage('profile.php')"><i class="fas fa-user-circle"></i>Profile</a>
         <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
     </div>
