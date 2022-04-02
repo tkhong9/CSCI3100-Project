@@ -16,7 +16,7 @@ $db = unisched_DB();
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Course List</title>
+    <title>Share Course</title>
     <link href="css/home.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -35,30 +35,34 @@ $db = unisched_DB();
     </div>
 </nav>
 <div class="content" id="display">
-    <h2>Course List</h2>
+    <h2>Share Course</h2>
 
     <?php
-        $stmt = $db->prepare("SELECT * FROM courses");
+        $shared = 1;
+        $stmt = $db->prepare("SELECT * FROM mycourses WHERE shared = ?");
+        $stmt->bind_param('i', $shared);
         $stmt->execute();
         $resultSet = $stmt->get_result();
         $res = $resultSet->fetch_all();
         foreach($res as $row){
+            $user_id = $row[1];
+            $stmt2 = $db->prepare("SELECT username FROM accounts WHERE id = ?");
+            $stmt2->bind_param('i', $user_id);
+            $stmt2->execute();
+            $resultSet2 = $stmt2->get_result();
+            $res2 = $resultSet2->fetch_all();
+            foreach($res2 as $row2){
+                $username = $row2[0];
     ?>
-    <div onmouseover="this.style.background='#ccc'" onmouseout="this.style.background=''">
-        <p id = "CourseCode<?php echo $row[0]; ?>">Course Code: <?php echo $row[1]; ?></p>
-        <p id = "CourseTitle<?php echo $row[0]; ?>">Course Title: <?php echo $row[2]; ?></p>
-        <p id = "Unit<?php echo $row[0]; ?>">Unit: <?php echo $row[3]; ?></p>
-        <p id = "Time<?php echo $row[0]; ?>">Time: <?php echo $row[4]; ?>-<?php echo $row[5]; ?>, <?php echo $row[6]; ?></p>
-        <p id = "Location<?php echo $row[0]; ?>">Location: <?php echo $row[7]; ?></p>
-        <button type="button" onclick="addCourse(`<?php echo $_SESSION['id']; ?>`, `<?php echo $row[0]; ?>`)">Add Course</button>
+    <div onclick="location.href='shared_timetable.php?userid=<?php echo $user_id; ?>&username=<?php echo $username; ?>'" onmouseover="this.style.background='#ccc'" onmouseout="this.style.background=''">
+        <h3><?php echo $username; ?>'s Timetable</h3>
     </div>
     <?php
+            }
         }
     ?>
 
 </div>
 </body>
-
-<script src = "mycourse.js"></script>
 
 </html>

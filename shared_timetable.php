@@ -16,7 +16,7 @@ $db = unisched_DB();
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Timetable</title>
+    <title>Shared Timetable</title>
     <link href="css/home.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -28,7 +28,7 @@ $db = unisched_DB();
     <div>
         <h1>Unisched</h1>
         <a href="home.php">Home</a>
-        <a href="timetable.php" onclick="showPage('timetable.php')">Timetable</a>
+        <a href="#" onclick="showPage('timetable.php')">Timetable</a>
         <a href="mycourselist.php" onclick="showPage('mycourselist.php')">My Course List</a>
         <a href="courselist.php" onclick="showPage('courselist.php')">Course List</a>
         <a href="shared.php" onclick="showPage('shared.php')">Share Course</a>
@@ -37,66 +37,51 @@ $db = unisched_DB();
     </div>
 </nav>
     <div class="content" id="display">
-    <h2>Timetable</h2>
-    <br>
-    <br>
-    <button type="button" style = "position:absolute; top:150px; right:300px;" onclick="privateCourse(<?php echo $_SESSION['id']; ?>)">Set to Private</button>
-    <button type="button" style = "position:absolute; top:150px; right:400px;" onclick="publicCourse(<?php echo $_SESSION['id']; ?>)">Set to Public</button>
     <?php
-        $stmt = $db->prepare("SELECT id FROM accounts WHERE username = ?");
-        $stmt->bind_param('s', $_SESSION['name']);
+        $userid = $_GET['userid'];
+        $username = $_GET['username'];
+    ?>
+    <h2><?php echo $username; ?>'s Timetable</h2>
+    <?php
+        $stmt = $db->prepare("SELECT * FROM mycourses WHERE user_id = ?");
+        $stmt->bind_param('i', $userid);
         $stmt->execute();
         $resultSet = $stmt->get_result();
         $res = $resultSet->fetch_all();
-        $res_count = count($res);
+        foreach($res as $row){
+            $courseno = 0;
+            $courseID = array($row[3], $row[4], $row[5], $row[6], $row[7], $row[8]);
+            for ($i = 0;$i < count($courseID);$i++){
+                if ($courseID[$i] != 0){
+                    $stmt2 = $db->prepare("SELECT * FROM courses WHERE course_id = ?");
+                    $stmt2->bind_param('i', $courseID[$i]);
+                    $stmt2->execute();
+                    $resultSet2 = $stmt2->get_result();
+                    $res2 = $resultSet2->fetch_all();
+                    foreach($res2 as $row2){
+                        $courseno += 1;
+                        $courseCode = $row2[1];
+                        //$courseTitle = $row3[2];
+                        //$courseUnit = $row3[3];
+                        $courseStrTime = $row2[4];
+                        $courseEndTime = $row2[5];
+                        $courseWeekday = $row2[6];
+                        //$courseLocation = $row3[7];
 
-        if ($res_count == 0) {
-            header('Content-Type: text/html; charset=utf-8');
-            echo 'This user is not exist! <br/><a href="javascript:history.back();">Back to admin panel.</a>';
-        }
-        else{
-            foreach($res as $row){
-                $user_id = $row[0];
-                $stmt2 = $db->prepare("SELECT * FROM mycourses WHERE user_id = ?");
-                $stmt2->bind_param('i', $user_id);
-                $stmt2->execute();
-                $resultSet2 = $stmt2->get_result();
-                $res2 = $resultSet2->fetch_all();
-                foreach($res2 as $row2){
-                    $courseno = 0;
-                    $courseID = array($row2[3], $row2[4], $row2[5], $row2[6], $row2[7], $row2[8]);
-                    for ($i = 0;$i < count($courseID);$i++){
-                        if ($courseID[$i] != 0){
-                            $stmt3 = $db->prepare("SELECT * FROM courses WHERE course_id = ?");
-                            $stmt3->bind_param('i', $courseID[$i]);
-                            $stmt3->execute();
-                            $resultSet3 = $stmt3->get_result();
-                            $res3 = $resultSet3->fetch_all();
-                            foreach($res3 as $row3){
-                                $courseno += 1;
-                                $courseCode = $row3[1];
-                                //$courseTitle = $row3[2];
-                                //$courseUnit = $row3[3];
-                                $courseStrTime = $row3[4];
-                                $courseEndTime = $row3[5];
-                                $courseWeekday = $row3[6];
-                                //$courseLocation = $row3[7];
-
-                                $weekday = strtolower(substr($courseWeekday, 0, 3));
-                                $strtime = explode(":", $courseStrTime);
-                                $weekid = $weekday . $strtime[0]; //e.g. wed10
+                        $weekday = strtolower(substr($courseWeekday, 0, 3));
+                        $strtime = explode(":", $courseStrTime);
+                        $weekid = $weekday . $strtime[0]; //e.g. wed10
         
     ?>
     <p id = "mycourseCode<?php echo $courseno; ?>" hidden><?php echo $courseCode; ?></p>
     <p id = "mycourseWeekid<?php echo $courseno; ?>" hidden><?php echo $weekid; ?></p>
 
     <?php
-                            }
-                        }
                     }
                 }
             }
         }
+
     ?>
     <p id = "mycourseno" hidden><?php echo $courseno; ?></p>
 
@@ -193,7 +178,6 @@ $db = unisched_DB();
 
 </body>
 
-<script src = "mycourse.js"></script>
 <script src = "javascript/timetable.js"></script>
 
 </html>
