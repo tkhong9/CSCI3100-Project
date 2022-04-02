@@ -67,8 +67,6 @@ function course_edit(){
     if (!preg_match('/^\d*$/', $_POST['course_id']))
         throw new Exception("invalid-course-id");
     $_POST['course_id'] = (int) $_POST['course_id'];
-    if (!preg_match('/^[a-zA-Z0-9\s]+$/u', $_POST['title']))
-        throw new Exception("invalid-title");
     if (!preg_match('/^[0-9\:]+$/u', $_POST['strtime']))
         throw new Exception("invalid-start-time");
     if (!preg_match('/^[0-9\:]+$/u', $_POST['endtime']))
@@ -76,7 +74,6 @@ function course_edit(){
 
     $_POST['course_id'] = (int) $_POST['course_id'];
     $course_id = $_POST["course_id"];
-    $title = $_POST["title"];
     $strtime = $_POST["strtime"];
     $endtime = $_POST["endtime"];
 
@@ -91,8 +88,8 @@ function course_edit(){
         echo 'This course is not inside the database! <br/><a href="javascript:history.back();">Back to admin panel.</a>';
     }
     else{
-        $stmt2 = $db->prepare("UPDATE courses SET courseTitle = ?, startTime = ?, endTime = ? WHERE course_id = ?");
-        $stmt2->bind_param("sssi", $title, $strtime, $endtime, $course_id);
+        $stmt2 = $db->prepare("UPDATE courses SET startTime = ?, endTime = ? WHERE course_id = ?");
+        $stmt2->bind_param("ssi", $strtime, $endtime, $course_id);
         if($stmt2->execute()){
             header('Location: admin.php');
         }
