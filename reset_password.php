@@ -96,7 +96,7 @@ $stmt->close();
                                 $token = md5($email).rand(10,9999);
                                 $stmt = "UPDATE accounts SET token = '$token' WHERE id = $id";
                                 $con->query($stmt); 
-                                $link = "<a href='localhost/Unisched/verify_email.php?key=".$email."&token=".$token."'>Click here to verify your password</a>";
+                                $link = "<a href='http://ec2-54-209-201-97.compute-1.amazonaws.com:8081/verify_email.php?key=".$email."&token=".$token."'>Click here to verify your password</a>";
                                 $mail = new PHPMailer(true);
     
                                 try {
@@ -106,7 +106,7 @@ $stmt->close();
                                     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
                                     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
                                     $mail->Username   = 'unisched000@gmail.com';                     //SMTP username
-                                    $mail->Password   = 'csci3100proj.';                               //SMTP password
+                                    $mail->Password   = 'csci3100project.';                               //SMTP password
                                     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
                                     $mail->Port       = 465;                                  
                                 
@@ -120,9 +120,8 @@ $stmt->close();
                                     $mail->Body    = ''.$link.'';
                                 
                                     $mail->send();
-                                    echo 'Message has been sent';
                                 } catch (Exception $e) {
-                                    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                                    $message = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
                                 }
                             }
                         }
@@ -142,7 +141,5 @@ $stmt->close();
 </div>
 
 </body>
-
-
 
 </html>
