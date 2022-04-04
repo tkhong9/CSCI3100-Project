@@ -65,7 +65,7 @@ $stmt->close();
                     <td><label>
                     <?php	
                         if ($f_path == NULL) {
-                            $f_path = "/Unisched/image/uploadImage.jpg";
+                            $f_path = "/image/uploadImage.jpg";
                         }
                     ?> 
                     
@@ -92,8 +92,6 @@ $stmt->close();
                             echo '<script>alert("Please upload a jpg/png file!")</script>';	
                         }else{
                             if($result) { 
-                                $fileTarget = "/UniSched/";	
-                                $fileTarget .= $target.$fileName;	
                                 echo '<script>alert("Your profile picture has been successfully uploaded!")</script>';		
                                 $query = "UPDATE accounts SET f_path = '$fileTarget' WHERE id = $id";;
                                 $con->query($query) or die("Error : ".mysqli_error($con));	
