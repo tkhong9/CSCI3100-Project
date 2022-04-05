@@ -35,7 +35,7 @@ $db = unisched_DB();
     </div>
 </nav>
 <div class="content" id="display">
-    <h2>Share Course</h2>
+    <h2>Share Timetable</h2>
 
     <?php
         $shared = 1;
