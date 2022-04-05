@@ -36,8 +36,31 @@ $db = unisched_DB();
 <div class="content" id="display">
     <h2>Course List</h2>
 
+    <form action="" method="GET" name="">
+	<table>
+		<tr>
+			<td><input type="text" name="k" value="<?php echo isset($_GET['k']) ? $_GET['k'] : ''; ?>" placeholder="Search for courses" /></td>
+			<td><input type="submit" name="" value="Search" /></td>
+		</tr>
+	</table>
+    </form>
+
     <?php
-        $stmt = $db->prepare("SELECT * FROM courses");
+
+        $search_string = "SELECT * FROM courses";
+
+        if (isset($_GET['k']) && $_GET['k'] != '') {
+            $k = trim($_GET['k']);
+            $keywords = explode(' ', $k);
+            $search_string .= " WHERE ";
+            foreach ($keywords as $word){
+                $search_string .= "courseCode LIKE '%".$word."%' OR courseTitle LIKE '%".$word."%' OR ";
+            }
+            $search_string = substr($search_string, 0, strlen($search_string)-4);
+
+        }
+
+        $stmt = $db->prepare($search_string);
         $stmt->execute();
         $resultSet = $stmt->get_result();
         $res = $resultSet->fetch_all();
