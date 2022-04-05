@@ -55,7 +55,7 @@ $db = unisched_DB();
             $keywords = explode(' ', $k);
             $search_string .= " WHERE ";
             foreach ($keywords as $word){
-                $search_string .= "courseCode LIKE '%".$word."%' OR courseTitle LIKE '%".$word."%' OR ";
+                $search_string .= "(courseCode LIKE '%".$word."%' OR courseTitle LIKE '%".$word."%') AND ";
             }
             $search_string = substr($search_string, 0, strlen($search_string)-4);
 
