@@ -96,7 +96,7 @@ $stmt->close();
                                 $token = md5($email).rand(10,9999);
                                 $stmt = "UPDATE accounts SET token = '$token' WHERE id = $id";
                                 $con->query($stmt); 
-                                $link = "<a href='http://ec2-54-209-201-97.compute-1.amazonaws.com:8081/verify_email.php?key=".$email."&token=".$token."'>Click here to verify your password</a>";
+                                $link = "<a href='http://ec2-54-209-201-97.compute-1.amazonaws.com:8081/verify_email_for_password.php?key=".$email."&token=".$token."'>Click here to verify your password</a>";
                                 $mail = new PHPMailer(true);
     
                                 try {
