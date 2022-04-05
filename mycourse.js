@@ -42,3 +42,35 @@ function deleteCourse(user_id, course_id) {
     window.location.reload();
   });
 }
+
+function publicCourse(user_id) {
+  var urlString ="userID="+user_id;
+  
+  $.ajax
+  ({
+  url: "ajax_public.php",
+  type : "POST",
+  cache : false,
+  data : urlString,
+  success: function(response)
+  {
+  alert(response);
+  }
+  });
+}
+
+function privateCourse(user_id) {
+  var urlString ="userID="+user_id;
+  
+  $.ajax
+  ({
+  url: "ajax_private.php",
+  type : "POST",
+  cache : false,
+  data : urlString,
+  success: function(response)
+  {
+  alert(response);
+  }
+  });
+}

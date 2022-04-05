@@ -38,8 +38,6 @@ foreach ($res as $val){
         enctype="multipart/form-data">
             <label for="course_id"> Course Code *</label>
             <div> <select id="course_id" name="course_id"><?php echo $options; ?></select></div>
-            <label for="course_title"> New Title *</label>
-            <div> <input id="course_title" type="text" name="title" required="required" pattern="^[a-zA-Z0-9\s]+$"/></div>
             <label for="course_strtime"> New Start Time *</label>
             <div> <input id="course_strtime" type="text" name="strtime" required="required" pattern="^[0-9\:]+$"/></div>
             <label for="course_endtime"> New End Time *</label>

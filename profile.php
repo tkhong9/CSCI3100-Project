@@ -35,6 +35,7 @@ $stmt->close();
     <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta charset=utf-8 />
 </head>
 <style>
@@ -64,7 +65,7 @@ $stmt->close();
                     <td><label>
                     <?php	
                         if ($f_path == NULL) {
-                            $f_path = "/Unisched/image/uploadImage.jpg";
+                            $f_path = "/image/uploadImage.jpg";
                         }
                     ?> 
                     
@@ -76,47 +77,52 @@ $stmt->close();
                     // Upload the profile pic 
                     if(isset($_POST['upload'])) {
                         // We need to use sessions, so you should always start sessions using the below code.
-                        session_start();
                         $id = $_SESSION['id'];
 
-                        $fileExistsFlag = 0; 
                         $fileName = $_FILES['Filename']['name'];
-                        $DATABASE_HOST = 'localhost';
-                        $DATABASE_USER = 'root';
-                        $DATABASE_PASS = '';
-                        $DATABASE_NAME = 'unisched';
-                        $link = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 
                         $target = "profile pic/";		
                         $fileTarget = $target.$fileName;	
                         $tempFileName = $_FILES["Filename"]["tmp_name"];
                         $result = move_uploaded_file($tempFileName,$fileTarget);
 
-                        if($result) { 
-                            $fileTarget = "/UniSched/";	
-                            $fileTarget .= $target.$fileName;	
-                            echo '<script>alert("Your new profile picture has been successfully uploaded!")</script>';		
-                            $query = "UPDATE accounts SET f_path = '$fileTarget', f_name = '$fileName' WHERE id = $id";;
-                            $link->query($query) or die("Error : ".mysqli_error($link));	
+                        $fileCheck = basename($_FILES['Filename']['name']);
+                        $fileType = strtolower(substr($fileCheck, strrpos($fileCheck, '.') + 1));        
+                        if(!($fileType == "jpg" || $fileType == "png")) {
+                            echo '<script>alert("Please upload a jpg/png file!")</script>';	
+                        }else{
+                            if($result) { 
+                                echo '<script>alert("Your profile picture has been successfully uploaded!")</script>';		
+                                $query = "UPDATE accounts SET f_path = '$fileTarget' WHERE id = $id";;
+                                $con->query($query) or die("Error : ".mysqli_error($con));	
+                            }
+                            else {		
+                                echo '<script>alert("ERROR")</script>';		
+                            }
                         }
-                        else {		
-                            echo '<script>alert("Please upload a new profile picture!")</script>';		
-                        }
-                        mysqli_close($link);
+
+                        mysqli_close($con);
                         // Refresh the page to show the new profile pic
                         $page = $_SERVER['PHP_SELF'];
                         echo '<meta http-equiv="Refresh" content="0;' . $page . '">';
-                        
                     } 
                 ?> 
             </tr>
             <tr>
                 <td>Username:</td>
                 <td><?=$_SESSION['name']?></td>
+                <form action="reset_username.php" method="post" enctype="multipart/form-data">
+                    <td><input TYPE="submit" name="upload" value="Reset Username"/></td>
+                </form>
+
+
             </tr>
             <tr>
                 <td>Password:</td>
-                <td><?=$password?></td>
+                <td>*******************</td>
+                <form action="reset_password.php" method="post" enctype="multipart/form-data">
+                    <td><input TYPE="submit" name="upload" value="Reset Password"/></td>
+                </form>
             </tr>
             <tr>
                 <td>Email:</td>
@@ -125,6 +131,8 @@ $stmt->close();
         </table>
     </div>
 </div>
+
 </body>
+
 
 </html>
