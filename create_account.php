@@ -48,7 +48,7 @@ try {
 
     $mail->send();
 } catch (Exception $e) {
-    echo 'Email could not be sent. Mailer Error: '.$mail->ErrorInfo;
+    $message = "Email could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -61,7 +61,7 @@ $result = $stmt->execute();
 $stmt->close();
 
 if (!$result) {
-    echo 'Query failed. '.$stmt->error;
+      $message = "Query failed.{$stmt->error}";
 }
 
 $stmt2 = $db->prepare("SELECT id FROM accounts WHERE username = ?");
@@ -78,10 +78,17 @@ foreach($res2 as $row){
     $result3 = $stmt3->execute();
     $stmt3->close();
     if (!$result3) {
-        echo 'Query failed. '.$stmt3->error;
+        $message = "Query failed.{$stmt3->error}";
     } else {
-        exit ('A verification email is sent to your email address!');
+        $message = "A verification email is sent to your email address!";
     }
 }
+
+echo "<SCRIPT> 
+alert('$message')
+window.location.replace('index.html');
+</SCRIPT>";
+
+?>
 
 ?>
