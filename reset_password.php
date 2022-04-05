@@ -67,7 +67,7 @@ $stmt->close();
     </div>
 </nav>
 <div class="content">
-    <h2>Reset Username Page</h2>
+    <h2>Reset Password Page</h2>
     <div>
         <form action="reset_password.php" method="post">
         Please enter your original password:<br>
@@ -78,7 +78,7 @@ $stmt->close();
         </form>
 
         <?php	
-                // Reset the username 
+                // Reset the password 
                 if(isset($_POST['reset_password'])) {
                    
                     $id = $_SESSION['id'];
@@ -101,7 +101,7 @@ $stmt->close();
     
                                 try {
                                     //Server settings
-                                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
+                                    $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
                                     $mail->isSMTP();                                            //Send using SMTP
                                     $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
                                     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
