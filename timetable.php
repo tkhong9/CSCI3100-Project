@@ -102,7 +102,7 @@ $db = unisched_DB();
 
     </div>
     <hr>
-    <div class="timetable">
+    <div class="timetable" id = "content1">
         <div class="week-names">
             <div>monday</div>
             <div>tuesday</div>

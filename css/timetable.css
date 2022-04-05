@@ -2,6 +2,7 @@
     display: grid;
     grid-template-areas: ". week" "time content";
 }
+
 .timetable .accent-pink-gradient {
     display: flex;
     width: 100%;
@@ -109,4 +110,34 @@
 }
 .timetable .content > div {
     box-shadow: inset 1px 0 0 #ECEFF1, inset 0 1px 0 0 #ECEFF1;
+}
+
+#content1 {
+    width: 1150px;
+    margin: 0 auto;
+}
+#content1 h2 {
+    margin: 0;
+    padding: 25px 0;
+    font-size: 22px;
+    border-bottom: 1px solid #e0e0e3;
+    color: #4a536e;
+}
+#content1 > p, #content1 > div {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
+    margin: 25px 0;
+    padding: 25px;
+    background-color: #fff;
+}
+#content1 > p table td, #content1 > div table td {
+    padding: 5px;
+}
+#content1 > p table td:first-child, #content1 > div table td:first-child {
+    font-weight: bold;
+    color: #4a536e;
+    padding-right: 15px;
+}
+#content1 > div p {
+    padding: 5px;
+    margin: 0 0 10px 0;
 }

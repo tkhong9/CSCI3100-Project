@@ -31,7 +31,7 @@ $username = $_GET['username'];
     <div>
         <h1>Unisched</h1>
         <a href="home.php">Home</a>
-        <a href="#" onclick="showPage('timetable.php')">Timetable</a>
+        <a href="timetable.php" onclick="showPage('timetable.php')">Timetable</a>
         <a href="mycourselist.php" onclick="showPage('mycourselist.php')">My Course List</a>
         <a href="courselist.php" onclick="showPage('courselist.php')">Course List</a>
         <a href="shared.php" onclick="showPage('shared.php')">Share Timetable</a>
@@ -87,7 +87,7 @@ $username = $_GET['username'];
 
     </div>
     <hr>
-    <div class="timetable">
+    <div class="timetable" id = "content1">
         <div class="week-names">
             <div>monday</div>
             <div>tuesday</div>

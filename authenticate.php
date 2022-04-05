@@ -35,14 +35,18 @@ if ($stmt = $db->prepare('SELECT id, password FROM accounts WHERE username = ?')
     	} else {
     		// Incorrect password
             $message = "Incorrect username and/or password!";
-            echo "<script type='text/javascript'>alert('$message');</script>";
-            header('Location: index.html');
+			echo "<script>
+			alert('$message');
+			window.location.href='index.html';
+			</script>";
     	}
     } else {
     	// Incorrect username
-        $message = "Incorrect username and/or password!";
-        echo "<script type='text/javascript'>alert('$message');</script>";
-        header('Location: index.html');
+		$message = "Incorrect username and/or password!";
+		echo "<script>
+		alert('$message');
+		window.location.href='index.html';
+		</script>";
     }
 
 
