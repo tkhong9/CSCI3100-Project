@@ -3,6 +3,16 @@ require __DIR__.'/lib/db.inc.php';
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 
+//Import PHPMailer classes into the global namespace
+//These must be at the top of your script, not inside a function
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer.php';
+require 'PHPMailer/SMTP.php';
+
 global $db;
 $db = unisched_DB();
 
@@ -12,11 +22,40 @@ if ( !isset($_POST['username'], $_POST['password']) ) {
     exit('Please fill both the username and password fields!');
 }
 
+$token = md5($_POST['email']).rand(10,9999);
+$link = "<a href='http://ec2-54-209-201-97.compute-1.amazonaws.com:8081/verify_email_for_create_account.php?key=".$_POST['email']."&token=".$token."'>Click here to verify your account</a>";
+$mail = new PHPMailer(true);
+
+try {
+    //Server settings
+    $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
+    $mail->isSMTP();                                            //Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+    $mail->Username   = 'unisched000@gmail.com';                     //SMTP username
+    $mail->Password   = 'csci3100project.';                               //SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+    $mail->Port       = 465;                                  
+
+    //Recipients
+    $mail->setFrom('unisched000@gmail.com', 'Unisched');
+    $mail->addAddress($_POST['email']);     //Add a recipient
+
+    //Content
+    $mail->isHTML(true);                                  //Set email format to HTML
+    $mail->Subject = '[Unisched] Verification email for creating the account';
+    $mail->Body    = ''.$link.'';
+
+    $mail->send();
+} catch (Exception $e) {
+    echo 'Email could not be sent. Mailer Error: '.$mail->ErrorInfo;
+}
+
 $hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-$stmt = $db->prepare('INSERT INTO accounts (username, password, email) VALUES(?, ?, ?)');
+$stmt = $db->prepare('INSERT INTO accounts (username, password, email, token) VALUES(?, ?, ?, ?)');
 
-$stmt->bind_param("sss",$_POST['username'],$hash,$_POST['email']);
+$stmt->bind_param("ssss",$_POST['username'],$hash,$_POST['email'], $token);
 $result = $stmt->execute();
 
 $stmt->close();
@@ -41,7 +80,7 @@ foreach($res2 as $row){
     if (!$result3) {
         echo 'Query failed. '.$stmt3->error;
     } else {
-        exit ('Account created, you may go back to login try it');
+        exit ('A verification email is sent to your email address!');
     }
 }
 
