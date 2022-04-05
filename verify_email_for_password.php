@@ -1,6 +1,6 @@
 <!doctype html>
     <head>
-        <title>Email Verification Page</title>
+        <title>Email Verification for Password Page</title>
     </head>
 
     <body>
@@ -28,9 +28,9 @@
             $stmt->close();
 
             if ($buffer_password != NULL){
-                $sql = "UPDATE accounts SET buffer_password = NULL WHERE email = '$email'";
+                $sql = "UPDATE accounts SET buffer_password = NULL WHERE token = '$token', email = '$email'";
                 mysqli_query($con, $sql);
-                $sql = "UPDATE accounts SET password = '$buffer_password' WHERE email = '$email'";
+                $sql = "UPDATE accounts SET password = '$buffer_password' WHERE token = '$token', email = '$email'";
                 mysqli_query($con, $sql);
                 $message = "Your new password has been verified.";
             }else{
