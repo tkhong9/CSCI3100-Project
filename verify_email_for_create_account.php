@@ -7,13 +7,15 @@
     <?php
         require __DIR__.'/lib/db.inc.php';
         
+        global $db;
+        $db = unisched_DB();
+        
         if($_GET['key'] && $_GET['token'])
         { 
             $email = $_GET['key'];
             $token = $_GET['token'];
             
-            global $db;
-            $db = unisched_DB();
+
         
             $stmt = $db->prepare('SELECT verified FROM accounts WHERE token =? and email =?');
             // In this case we can use the account ID to get the account info.
