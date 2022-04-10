@@ -94,6 +94,8 @@ $stmt->close();
                                 $stmt = "UPDATE accounts SET token = '$token' WHERE id = $id";
                                 $db->query($stmt); 
                                 $link = "<a href='http://ec2-54-209-201-97.compute-1.amazonaws.com:8081/verify_email_for_password.php?key=".$email."&token=".$token."'>Click here to verify your password</a>";
+                                
+                                // Reference: https://github.com/PHPMailer/PHPMailer
                                 $mail = new PHPMailer(true);
     
                                 try {
