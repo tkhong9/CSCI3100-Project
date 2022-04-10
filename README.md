@@ -48,7 +48,7 @@ This project is mainly base on HTML/CSS/Javascript and PHP. Also, we use ajax to
 
 ### Backend
 
-The project is developed in PHP with MySQL. It is hosted on Amazon Web Services (AWS) and we use XAMPP and phpMyadmin to handle the databse. Here is the database structure:
+The project is developed in PHP with MySQL. It is hosted on Amazon Web Services (AWS) and we use XAMPP and phpMyadmin to handle the database. Here is the database structure:
 
 Database name: unisched
 
