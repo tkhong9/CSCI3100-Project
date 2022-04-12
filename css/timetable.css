@@ -113,31 +113,85 @@
 }
 
 #content1 {
-    width: 1150px;
     margin: 0 auto;
 }
 #content1 h2 {
     margin: 0;
-    padding: 25px 0;
     font-size: 22px;
     border-bottom: 1px solid #e0e0e3;
     color: #4a536e;
 }
 #content1 > p, #content1 > div {
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.1);
-    margin: 25px 0;
-    padding: 25px;
     background-color: #fff;
 }
-#content1 > p table td, #content1 > div table td {
-    padding: 5px;
-}
+
 #content1 > p table td:first-child, #content1 > div table td:first-child {
     font-weight: bold;
     color: #4a536e;
     padding-right: 15px;
 }
-#content1 > div p {
-    padding: 5px;
-    margin: 0 0 10px 0;
+
+/* Here is the buttons which are downloaded from https://cssbuttons.app/ */
+.bn632-hover {
+  width: 120px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 0px;
+  height: 40px;
+  text-align:center;
+  border: none;
+  background-size: 300% 100%;
+  border-radius: 50px;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.bn632-hover:hover {
+  background-position: 100% 0;
+  moz-transition: all .4s ease-in-out;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.bn632-hover:focus {
+  outline: none;
+}
+
+.bn632-hover.bn25 {
+  background-image: linear-gradient(
+    to right,
+    #29323c,
+    #485563,
+    #2b5876,
+    #4e4376
+  );
+  box-shadow: 0 4px 10px 0 rgba(45, 54, 65, 0.75);
+}
+
+.bn632-hover.bn26 {
+  background-image: linear-gradient(
+    to right,
+    #25aae1,
+    #4481eb,
+    #04befe,
+    #3f86ed
+  );
+  box-shadow: 0 4px 10px 0 rgba(65, 132, 234, 0.75);
+}
+
+.bn632-hover.bn27 {
+  background-image: linear-gradient(
+    to right,
+    #ed6ea0,
+    #ec8c69,
+    #f7186a,
+    #fbb03b
+  );
+  box-shadow: 0 4px 10px 0 rgba(236, 116, 149, 0.75);
 }

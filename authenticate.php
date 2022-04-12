@@ -13,14 +13,14 @@ if ( !isset($_POST['username'], $_POST['password']) ) {
 }
 
 // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
-if ($stmt = $db->prepare('SELECT id, password, isAdmin, verified FROM accounts WHERE username = ?')) {
+if ($stmt = $db->prepare('SELECT id, password, email, isAdmin, verified, f_path FROM accounts WHERE username = ?')) {
 	// Bind parameters (s = string, i = int, b = blob, etc), in our case the username is a string so we use "s"
 	$stmt->bind_param('s', $_POST['username']);
 	$stmt->execute();
 	// Store the result so we can check if the account exists in the database.
 	$stmt->store_result();
 	if ($stmt->num_rows > 0) {
-    	$stmt->bind_result($id, $password, $isAdmin, $verified);
+    	$stmt->bind_result($id, $password, $email, $isAdmin, $verified, $f_path);
     	$stmt->fetch();
     	// Account exists, now we verify the password.
     	// Note: remember to use password_hash in your registration file to store the hashed passwords.
@@ -30,19 +30,22 @@ if ($stmt = $db->prepare('SELECT id, password, isAdmin, verified FROM accounts W
         		// Create sessions, so we know the user is logged in, they basically act like cookies but remember the data on the server.
         		session_regenerate_id();
         		$_SESSION['loggedin'] = TRUE;
+            $_SESSION['myemail'] = $email;
         		$_SESSION['name'] = $_POST['username'];
         		$_SESSION['id'] = $id;
+            $_SESSION['f_path'] = $f_path;
         		if($isAdmin == 1){
-                		header('Location: adminHome.php');
+                $_SESSION['admin'] = TRUE;
         		}else{
-        		    header('Location: home.php');
+                $_SESSION['admin'] = FALSE;
         		} 
-         } else {
+          
+               header('Location: home.php');
        		    // Unverified account
               $message = "Account has not been verified!";
         		  echo "<script>
         		  alert('$message');
-        		  window.location.href='index.html';
+        		  window.location.href='login.html';
         		  </script>";    
          }
 
@@ -51,7 +54,7 @@ if ($stmt = $db->prepare('SELECT id, password, isAdmin, verified FROM accounts W
             $message = "Incorrect username and/or password!";
         		echo "<script>
         		alert('$message');
-        		window.location.href='index.html';
+        		window.location.href='login.html';
         		</script>";
     	}
     } else {
@@ -59,7 +62,7 @@ if ($stmt = $db->prepare('SELECT id, password, isAdmin, verified FROM accounts W
         $message = "Incorrect username and/or password!";
     		echo "<script>
     		alert('$message');
-    		window.location.href='index.html';
+    		window.location.href='login.html';
     		</script>";
     }
 

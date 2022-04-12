@@ -9,23 +9,25 @@ if (!isset($_SESSION['loggedin'])) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Home Page</title>
+    <title>Account List Page</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
     <!-- Other CSS -->
     <link href="css/adminHome.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <link href="css/home.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 </head>
 
-<body class="loggedin">
+<body>
+
     <div class="container-fluid no-padding">
 
         <!--navbar-->
@@ -119,61 +121,85 @@ if (!isset($_SESSION['loggedin'])) {
             </nav>
         </header>
 
-        <!--Welcome message-->
-        <div class="content container pt-1">
-            <h2>Home</h2>
-            <p>Welcome back, <?= $_SESSION['name'] ?>!</p>
-        </div>
+        <div class="content row" id="display">
+            <h2>Account List</h2>
 
-        <!--Home page post-->
-        <div class="container mb-5">
-            <!-- PHP inside HTML -->
-            <?php
-            require __DIR__ . '/lib/db.inc.php';
-            $db = unisched_DB();
-            $sql = "SELECT  accounts.f_path, accounts.username,home_post.post_text, courses.courseTitle,courses.courseCode\n"
-                . "FROM home_post , accounts , courses\n"
-                . "WHERE (( isShow = 1))\n"
-                . "AND accounts.id = home_post.id\n"
-                . "AND courses.course_id = home_post.course_id;";
-            $res = $db->query($sql);
-            while ($row = $res->fetch_assoc()) {
-                if ($row['f_path'] == Null) {
-                    $my_f_path = "/image/uploadImage.jpg";
-                }
-                else {
-                    $my_f_path = $row['f_path'];
-                }
-                echo '<div class="row d-flex align-items-center justify-content-center">
-                      <div class="col pt-5">
-                      <div class="card">
-                      <div class="d-flex justify-content-between p-2 px-3">
-                      <div class="d-flex flex-row align-items-center">';
-                //Dispaly username pic
-                echo '<img src="';
-                echo $my_f_path;
-                echo '"width="200px" height: "30%" class="img-fluid rounded-circle">';
-                //Display username
-                echo '<div class="d-flex flex-column ml-2">';
-                echo $row['username'];
-                echo '</span></div></div>';
-                echo '<p>';
-                echo $row['post_text'];
-                echo '</p>';
-                echo '<p>';
-                echo $row['courseTitle'];
-                echo ' ';
-                echo $row['courseCode'];
-                echo '</p></div>
-                     </div>
-                     </div>
-                     </div>';
-            }
-            ?>
+            <div class="container-fluid px-5">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="accountTable">
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- PHP insdie HTML-->
+                                <?php
+                                require __DIR__ . '/lib/db.inc.php';
+                                $db = unisched_DB();
+                                $res = $db->query("SELECT * FROM accounts ORDER BY id DESC");
+                                while ($row = $res->fetch_assoc()) {
+                                    echo '<tr>';
+                                    echo '<td scope="row">' . $row['id'] . '</td>';
+                                    echo '<td>' . $row['username'] . '</td>';
+                                    echo '<td>' . $row['email'] . '</td>';
+                                    echo '<td>
+                        <button type="button" class="btn btn-primary btn-result">
+                         View & Edit
+                        </button>
+                        </td>
+                        </tr>';
+                                }
+                                $res->free();
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+
 </body>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </html>
+
+
+<script>
+    $(document).ready(function() {
+        //Read selected row data (id)
+        $(".btn-result").on('click', function() {
+            var currentRow = $(this).closest("tr");
+            var row_id = currentRow.find("td:eq(0)").html();
+
+            const form = document.createElement('form');
+            form.method = 'post';
+            form.action = 'searchAccount.php';
+            document.body.appendChild(form);
+
+
+            const formField = document.createElement('input');
+            formField.type = 'hidden';
+            formField.name = 'selectedID';
+            formField.value = row_id
+            form.appendChild(formField);
+
+            form.submit();
+        });
+    });
+
+    $(document).ready(function() {
+        $('#accountTable').DataTable();
+    });
+</script>

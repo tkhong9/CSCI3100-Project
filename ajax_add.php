@@ -43,12 +43,12 @@ foreach($res as $row){
             $theendTime = intval(explode(":", $row3[5]));
             $theday = $row3[6];
             if ($day == $theday){
-                if ($newstrTime >= $thestrTime and $newstrTime <= $theendTime){
+                if ($newstrTime >= $thestrTime and $newstrTime < $theendTime){
                     $timeconflict = 1;
                     $conflictcourse = $row3[1];
                     break;
                 }
-                if ($newendTime >= $thestrTime and $newendTime <= $theendTime){
+                if ($newendTime > $thestrTime and $newendTime <= $theendTime){
                     $timeconflict = 1;
                     $conflictcourse = $row3[1];
                     break;

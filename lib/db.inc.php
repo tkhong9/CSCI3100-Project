@@ -39,7 +39,7 @@ function course_insert(){
         throw new Exception("invalid-end-time");
     if (!preg_match('/^[a-zA-Z]+$/', $_POST['day']))
         throw new Exception("invalid-day");
-    if (!preg_match('/^[a-zA-Z0-9\s]+$/', $_POST['location']))
+    if (!preg_match('/^[a-zA-Z0-9\.\s]+$/', $_POST['location']))
         throw new Exception("invalid-location");
 
 
@@ -66,7 +66,6 @@ function course_edit(){
     $db = unisched_DB();
     if (!preg_match('/^\d*$/', $_POST['course_id']))
         throw new Exception("invalid-course-id");
-    $_POST['course_id'] = (int) $_POST['course_id'];
     if (!preg_match('/^[0-9\:]+$/u', $_POST['strtime']))
         throw new Exception("invalid-start-time");
     if (!preg_match('/^[0-9\:]+$/u', $_POST['endtime']))
