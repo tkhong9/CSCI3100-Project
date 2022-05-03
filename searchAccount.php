@@ -1,4 +1,5 @@
 <?php
+// To check whether the is logged in.
 session_start();
 
 // Now we check if the data from the login form was submitted, isset() will check if the data exists.

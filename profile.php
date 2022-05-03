@@ -1,4 +1,6 @@
 <?php
+// This part is the front page of the user profile.
+// User can change their profile picture, username and password from here.
 require __DIR__ . '/lib/db.inc.php';
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();

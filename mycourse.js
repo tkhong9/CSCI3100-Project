@@ -1,3 +1,4 @@
+// To call the add/drop course, set_private/set_public php files by ajax.
 function addCourse(user_id, course_id) {
   var time = document.getElementById('Time'+course_id).innerHTML;
   var newtime = time.split(': ')[1];

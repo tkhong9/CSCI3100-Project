@@ -1,4 +1,5 @@
 <?php
+// This is the home page for user. It also shows the post that posted by others.
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...

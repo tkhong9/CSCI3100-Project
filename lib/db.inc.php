@@ -1,4 +1,6 @@
 <?php
+// This part is to handle the database. 
+//The admin can add, edit, delete the course from the course_xxx() function.
 function unisched_DB() {
 	// connect to the database
     $DATABASE_HOST = 'localhost';

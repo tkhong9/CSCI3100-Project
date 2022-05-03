@@ -1,4 +1,6 @@
 <?php
+// This part is the front page for the admin to handle the course database. 
+//The admin can add, edit and delete the course from this page.
 require __DIR__ . '/lib/db.inc.php';
 
 // We need to use sessions, so you should always start sessions using the below code.

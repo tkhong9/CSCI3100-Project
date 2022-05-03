@@ -1,4 +1,5 @@
 <?php
+// This part is for the user to delete their course from the mycourse database.
 require __DIR__.'/lib/db.inc.php';
 global $db;
 $db = unisched_DB();

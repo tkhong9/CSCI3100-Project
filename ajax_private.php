@@ -1,4 +1,5 @@
 <?php
+// This part is to set the user timetable to private.
 require __DIR__.'/lib/db.inc.php';
 global $db;
 $db = unisched_DB();

@@ -1,4 +1,5 @@
 <?php
+// This part is to push the post to the home page.
 require __DIR__.'/lib/db.inc.php';
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();

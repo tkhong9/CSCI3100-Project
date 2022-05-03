@@ -1,4 +1,5 @@
 <?php
+// This part is to create account and send the verification e-mail to user.
 require __DIR__.'/lib/db.inc.php';
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();

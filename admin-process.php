@@ -1,4 +1,6 @@
 <?php
+// This part is to call the course database. 
+//The admin can call the course_xxx() function from here and also handle the error.
 include_once('lib/db.inc.php');
 
 header('Content-Type: application/json');
